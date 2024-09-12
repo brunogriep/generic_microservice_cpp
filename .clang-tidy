@@ -1,0 +1,16 @@
+---
+Checks: 'clang-diagnostic-*,
+        clang-analyzer-*,
+        bugprone-*,
+        readability-*,
+        portability-*,
+        misc-*,
+        performance-*,
+        clang-analyzer-*,
+        modernize-*,
+        -cppcoreguidelines-*,
+
+WarningsAsErrors: ''
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
+FormatStyle: InheritParentConfig
