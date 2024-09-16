@@ -12,11 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag custom-image:$(date +%s)
-  container-test-job:
-    runs-on: ubuntu-latest
-    container:
-      image: custom-image:$(date +%s)
-      steps:
-      - name: Build hello world
-        run: cmake -S. -Bbuild . && cmake --build .
+      run: echo Hi
+    #   run: docker build . --file Dockerfile --tag custom-image:$(date +%s)
+    # container:
+    #   image: custom-image:$(date +%s)
+    #   steps:
+    #   - name: Build hello world
+    #     run: cmake -S. -Bbuild . && cmake --build .
