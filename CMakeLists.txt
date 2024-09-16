@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.8)
 project(GenericMicroservice)
 
-include(cmake/common.cmake)
+# include(cmake/common.cmake)
+find_package(Threads REQUIRED)
+find_package(Protobuf REQUIRED)
+find_package(gRPC REQUIRED)
 
 # Proto file
 set(hello_proto "{CMAKE_SOURCE_DIR}/protos/hello.proto")
@@ -37,4 +40,4 @@ add_library(hello_grpc_proto
 #   absl::absl_log
 #   ${_REFLECTION}
 #   ${_GRPC_GRPCPP}
-#   ${_PROTOBUF_LIBPROTOBUF})
+#   protobuf::protobuf)
