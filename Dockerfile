@@ -1,9 +1,7 @@
 FROM ubuntu:22.04
 
-RUN apt-get update -qq && \
-    export DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qqy \
     build-essential \
     libtool \
     pkg-config \
@@ -20,13 +18,12 @@ RUN apt-get install -y \
     python3 \
     python3-pip
 
-RUN apt-get autoremove -y && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 RUN pip3 install conan
+RUN conan profile detect --force
 
-# Include project
+COPY conanfile.py .
+
+RUN conan install . --build=missing -s build_type=Debug
+
 ADD . /workspace
 WORKDIR /workspace
-
-CMD ["/bin/bash"]
