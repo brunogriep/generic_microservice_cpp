@@ -17,8 +17,11 @@ jobs:
       - name: check protoc
         run: |
           apt-get install -y protobuf-compiler
-      - name: Running cmake config
+      - name: Running cmake config and building the project
         run: |
           ls -la
           cmake -S. -Bbuild . -DCMAKE_PREFIX_PATH=/usr/local
           cmake --build build
+      - name: Run unit tests
+        run: 
+          ./build/test/example_test
