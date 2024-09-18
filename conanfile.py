@@ -9,6 +9,7 @@ class ExampleRecipe(ConanFile):
     def requirements(self):
         self.requires("grpc/1.65.0")
         self.requires("gtest/1.15.0")
+        self.requires("glog/0.7.1")
 
     def layout(self):
         cmake_layout(self)

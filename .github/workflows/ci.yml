@@ -8,16 +8,24 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: CI
     runs-on: ubuntu-latest
     container: brunogriep/grpc-cpp:develop
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: check protoc
+      - name: Install protoc
         run: |
           apt-get install -y protobuf-compiler
-      - name: Running cmake config and building the project
+      - name: Build and Install glog
+        run: |
+          git clone https://github.com/google/glog.git
+          cd glog
+          cmake -S . -B build -G "Unix Makefiles"
+          cmake --build build
+          cmake --build build --target install
+          cd ..
+      - name: Build
         run: |
           ls -la
           cmake -S. -Bbuild . -DCMAKE_PREFIX_PATH=/usr/local
@@ -25,3 +33,27 @@ jobs:
       - name: Run unit tests
         run: 
           ./build/test/example_test
+  build-conan:
+    name: Build with conan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Install Conan
+        id: conan
+        uses: turtlebrowser/get-conan@main
+      - name: Conan version
+        run: echo "${{ steps.conan.outputs.version }}"
+      - name: Conan settings
+        run: |
+          conan profile detect --force
+          conan install . --build=missing --settings=build_type=Debug
+      - name: Build
+        run: |
+          cd build
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=$(find . -type f -name "conan_toolchain.cmake") -DCMAKE_BUILD_TYPE=Debug
+          cmake --build .
+      - name: Run unit tests
+        run: |
+          ls -la
+          ./example_test 
