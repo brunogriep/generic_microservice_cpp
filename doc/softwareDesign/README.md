@@ -76,3 +76,35 @@ This is not definitive
   - [Protobuffers](https://protobuf.dev/) to define the RPC calls and data structures
   - [googletest](https://github.com/google/googletest) as the unit testing framework
   - [Conan](https://conan.io/) as the software package manager
+
+
+# Database
+```mermaid
+classDiagram
+    class Database{
+        +init()
+    }
+    class DatabaseServer {
+        + RetrieveData()*
+        + StoreData()*
+        + RemoveData()*
+        + CleanAll()*
+        - 
+    }
+    class IGrpcServer {
+        + RetrieveData()*
+        + StoreData()*
+        + RemoveData()*
+        + CleanAll()*
+    }
+    class SQLiteWrapper {
+
+    }
+    class ISQLite{
+    }
+
+    Database --> DatabaseServer
+    DatabaseServer ..|> IGrpcServer
+    DatabaseServer o-- SQLiteWrapper
+    SQLiteWrapper ..|> ISQLite
+```

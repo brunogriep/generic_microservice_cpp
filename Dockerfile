@@ -14,6 +14,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     libtool \
     libprotobuf-dev \
     libgtest-dev \
+    libsqlite3-dev \
     make \
     pkg-config \
     protobuf-compiler \
@@ -32,9 +33,8 @@ RUN git clone --recurse-submodules -b v1.66.0 --depth 1 --shallow-submodules htt
     make install && \
     cd ../../..
 
-# RUN conan profile detect --force
-# COPY conanfile.py .
-# RUN conan install . --build=missing -s build_type=Debug
-
 ADD . /workspace
 WORKDIR /workspace
+
+RUN conan profile detect --force
+RUN conan install . --build=missing --settings=build_type=Debug
