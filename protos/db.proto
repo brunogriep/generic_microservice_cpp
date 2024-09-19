@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package db;
+
+message StoreRequest {
+  repeated uint32 data = 1;
+}
+
+message StoreResponse {
+  bool confirmStore = 1;
+  string uuid = 2;
+}
+
+message RetrieveRequest {
+  string uuid = 1;
+}
+
+message RetrieveResponse {
+  bool confirmStore = 1;
+  string uuid = 2;
+}
+
+service Database {
+  rpc StoreData (StoreRequest) returns (StoreResponse) {}
+  rpc RetrieveData (RetrieveRequest) returns (RetrieveResponse) {}
+}
