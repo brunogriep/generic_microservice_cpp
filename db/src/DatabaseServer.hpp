@@ -15,8 +15,6 @@ class DatabaseServer final : public database::Database::Service {
                    database::StoreResponse* reply) -> grpc::Status override;
     auto RetrieveData(grpc::ServerContext* context, const database::RetrieveRequest* request,
                       database::RetrieveResponse* reply) -> grpc::Status override;
-    auto StoreResponse(grpc::ServerContext* context, const database::StoreRequest* request,
-                       database::StoreResponse* reply) -> grpc::Status override;
 };
 
 } // namespace db

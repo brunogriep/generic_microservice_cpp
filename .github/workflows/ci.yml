@@ -17,24 +17,24 @@ jobs:
       - name: Install protoc
         run: |
           apt-get install -y protobuf-compiler
-      - name: Build and Install glog
-        run: |
-          git clone https://github.com/google/glog.git
-          cd glog
-          cmake -S . -B build -G "Unix Makefiles"
-          cmake --build build
-          cmake --build build --target install
-          cd ..
-      - name: Install SQLite
-        run:
-          apt-get install libsqlite3-dev
-      - name: Build and install sqlite3pp
-        run: |
-          git clone https://github.com/fnc12/sqlite_orm.git sqlite_orm
-          cd sqlite_orm
-          cmake -B build
-          cmake --build build --target install
-          cd ..
+      # - name: Build and Install glog
+      #   run: |
+      #     git clone https://github.com/google/glog.git
+      #     cd glog
+      #     cmake -S . -B build -G "Unix Makefiles"
+      #     cmake --build build
+      #     cmake --build build --target install
+      #     cd ..
+      # - name: Install SQLite
+      #   run:
+      #     apt-get install libsqlite3-dev
+      # - name: Build and install sqlite3pp
+      #   run: |
+      #     git clone https://github.com/fnc12/sqlite_orm.git sqlite_orm
+      #     cd sqlite_orm
+      #     cmake -B build
+      #     cmake --build build --target install
+      #     cd ..
       - name: Build
         run: |
           ls -la

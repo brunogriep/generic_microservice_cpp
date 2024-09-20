@@ -23,5 +23,4 @@ message RetrieveResponse {
 service Database {
   rpc StoreData (StoreRequest) returns (StoreResponse) {}
   rpc RetrieveData (RetrieveRequest) returns (RetrieveResponse) {}
-  rpc RemoveAll
 }

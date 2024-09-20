@@ -1,25 +1,47 @@
 #include "SQLiteWrapper.hpp"
 
+// TODO: remove aftger adding glog logs
+#include <iostream>
+
 namespace db {
 
 SQLiteWrapper::SQLiteWrapper()
-    : m_storage(std::make_unique<Storage>(initStorage("db.sqlite")))
+    : m_latestUuid(0)
 {
+    m_storage = std::make_unique<Storage>(initStorage("db.sqlite"));
     m_storage->sync_schema();
-    m_storage->remove_all<DataStruct>();
 }
 
-auto SQLiteWrapper::Store(DataStruct &data) -> void {
-    data.id = storage.insert(data);
- }
+uint32_t SQLiteWrapper::Store(const DataStruct& data)
+{
+    m_latestUuid = m_storage->insert(data);
+    return m_latestUuid;
+}
 
-auto SQLiteWrapper::Retrieve() -> DataType { }
+DataStruct SQLiteWrapper::Retrieve()
+{
+    return Retrieve(m_latestUuid);
+}
 
-auto SQLiteWrapper::Retrieve(uint32_t id) -> DataType { }
+DataStruct SQLiteWrapper::Retrieve(uint32_t id)
+{
+    // auto data = m_storage->get_no_throw<DataStruct>(id);
+    // std::cout << "tweet with id " << id << (bool(data) ? " exists" : " doesn't exist") << std::endl;
+    // if (data) {
+    //     std::cout << m_storage->dump(*data) << std::endl;
+    // }
+    auto data = m_storage.get(id);
+    return data;
+}
 
-auto SQLiteWrapper::UpdateBackup() -> void { }
+/*
+auto SQLiteWrapper::UpdateBackup() -> void {
+    // TODO
+}
 
-auto SQLiteWrapper::PerformBackup() -> void { }
+auto SQLiteWrapper::PerformBackup() -> void {
+    // TODO
+}
 
 auto SQLiteWrapper::Remove() -> void
 {
@@ -28,7 +50,8 @@ auto SQLiteWrapper::Remove() -> void
 
 auto SQLiteWrapper::Remove(uint32_t id) -> void
 {
-    storage.remove<DataStruct>(id);
+    m_storage->remove<DataStruct>(id);
 }
+*/
 
-}
+} // namespace db

@@ -7,7 +7,7 @@ set(PROTO_NAMESPACE hello)
 # Protobuf/Grpc source files
 set(PROTO_FILES
     hello.proto
-    db.proto
+    database.proto
 )
 
 # Add Library target with protobuf sources

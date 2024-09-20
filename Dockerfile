@@ -23,7 +23,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
 
 RUN pip3 install conan
 
-# install grpc
+# Install gRPC
 RUN git clone --recurse-submodules -b v1.66.0 --depth 1 --shallow-submodules https://github.com/grpc/grpc && \
     cd grpc && \
     mkdir -p cmake/build && \
@@ -32,6 +32,21 @@ RUN git clone --recurse-submodules -b v1.66.0 --depth 1 --shallow-submodules htt
     make -j 4 && \
     make install && \
     cd ../../..
+
+# Install glog
+RUN git clone https://github.com/google/glog.git && \
+    cd glog && \
+    cmake -S . -B build -G "Unix Makefiles" && \
+    cmake --build build && \
+    cmake --build build --target install && \
+    cd ..
+
+# Install SQLite ORM
+RUN git clone https://github.com/fnc12/sqlite_orm.git sqlite_orm && \
+    cd sqlite_orm && \
+    cmake -B build && \
+    cmake --build build --target install && \
+    cd ..
 
 ADD . /workspace
 WORKDIR /workspace
